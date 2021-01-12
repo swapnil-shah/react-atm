@@ -7,12 +7,7 @@ class App extends Component {
   render() {
     return (
       <div id="content">
-        <div id="nav">
-          <div id="logo">
-            <img src={logo} alt="General Assembly logo" />
-          </div>
-          <div id="title">Bank of GA</div>
-        </div>
+        <div id="nav"></div>
         <Account name="Checking" />
         <div className="clear"></div>
       </div>

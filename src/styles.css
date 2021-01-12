@@ -39,3 +39,9 @@ body {
   background-color: #f52f4f;
   color: #ffffff;
 }
+.error {
+  display: none;
+}
+.error.show {
+  display: block;
+}

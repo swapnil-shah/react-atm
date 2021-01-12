@@ -3,14 +3,13 @@ import React, { Component } from "react";
 export default class Account extends Component {
   state = {
     balance: 0,
-    value: ""
+    value: "",
+    showError: true
   };
 
   handleDepositClick = (e) => {
     e.preventDefault();
-
     let parsedValue = +this.state.value;
-
     if (isNaN(parsedValue)) {
       this.setState({ value: "" });
     } else {
@@ -22,6 +21,22 @@ export default class Account extends Component {
     }
   };
 
+  handleWithdrawClick = (e) => {
+    e.preventDefault();
+    let parsedValue = +this.state.value;
+    const newBalance = this.state.balance - parsedValue;
+    if (newBalance >= 0) {
+      this.setState({
+        balance: newBalance,
+        value: ""
+      });
+    } else {
+      this.setState({
+        showError: !this.state.showError
+      });
+    }
+  };
+
   onChangeHandler = (e) => {
     if (e.target.value >= 0) {
       this.setState({ value: e.target.value });
@@ -29,7 +44,7 @@ export default class Account extends Component {
   };
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     let balanceClass = "balance";
     if (this.state.balance === 0) {
       balanceClass += " zero";
@@ -38,6 +53,9 @@ export default class Account extends Component {
     return (
       <div className="account">
         <h2>{this.props.name}</h2>
+        <div className={this.state.showError ? "error" : "error show"}>
+          You dont enough balance to withdraw ${this.state.value} amount
+        </div>
         <div className={balanceClass}>${this.state.balance}</div>
         <input
           type="number"
@@ -49,6 +67,11 @@ export default class Account extends Component {
           type="button"
           value="Deposit"
           onClick={this.handleDepositClick}
+        />
+        <input
+          type="button"
+          value="Withdraw"
+          onClick={this.handleWithdrawClick}
         />
       </div>
     );
